@@ -5,7 +5,8 @@
         "core": "*",
         "radio": "*",
         "pxt-hummingbird-bit": "github:birdbraintechnologies/pxt-hummingbird-bit#v0.0.7",
-        "microphone": "*"
+        "microphone": "*",
+        "radio-broadcast": "*"
     },
     "files": [
         "main.blocks",
