@@ -54,10 +54,12 @@ function Stop () {
     hummingbird.setRotationServo(FourPort.One, 0)
     hummingbird.setRotationServo(FourPort.Two, 0)
 }
+// Start hummingbird and turn on the headlights
 hummingbird.startHummingbird()
 let direction = 0
 hummingbird.setLED(ThreePort.One, 100)
 hummingbird.setLED(ThreePort.Two, 100)
+// Move the robot if it senses my hand, and stop moving it when it senses my hand again.
 basic.forever(function () {
     if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 3.5) {
         while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 3.5) {
@@ -82,6 +84,7 @@ basic.forever(function () {
         Stop()
     }
 })
+// Turn on the police light and siren if the car is moving, otherwise turn on the rear lights.
 basic.forever(function () {
     if (!(direction == 0)) {
         hummingbird.setLED(ThreePort.Three, 0)
