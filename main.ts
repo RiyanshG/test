@@ -59,6 +59,7 @@ hummingbird.startHummingbird()
 let direction = 0
 hummingbird.setLED(ThreePort.One, 100)
 hummingbird.setLED(ThreePort.Two, 100)
+serial.writeNumber(hummingbird.getBattery())
 // Move the robot if it senses my hand, and stop moving it when it senses my hand again.
 basic.forever(function () {
     if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 3.5) {
