@@ -19,22 +19,25 @@ function PoliceLEDOff () {
     0,
     0
     )
+    hummingbird.setLED(ThreePort.Three, 0)
 }
 function PoliceLEDOn () {
-    hummingbird.setTriLED(
-    TwoPort.Two,
-    255,
-    0,
-    0
-    )
-    basic.pause(300)
-    hummingbird.setTriLED(
-    TwoPort.Two,
-    0,
-    0,
-    255
-    )
-    basic.pause(300)
+    while (!(direction == 0)) {
+        hummingbird.setTriLED(
+        TwoPort.Two,
+        255,
+        0,
+        0
+        )
+        music.playTone(523, music.beat(BeatFraction.Whole))
+        hummingbird.setTriLED(
+        TwoPort.Two,
+        0,
+        0,
+        255
+        )
+        music.playTone(622, music.beat(BeatFraction.Whole))
+    }
 }
 function GoBackward (sec: number) {
     hummingbird.setRotationServo(FourPort.One, -100)
@@ -55,8 +58,9 @@ function Stop () {
     hummingbird.setRotationServo(FourPort.Two, 0)
 }
 // Start hummingbird and turn on the headlights
-hummingbird.startHummingbird()
 let direction = 0
+hummingbird.startHummingbird()
+direction = 0
 hummingbird.setLED(ThreePort.One, 100)
 hummingbird.setLED(ThreePort.Two, 100)
 serial.writeNumber(hummingbird.getSensor(SensorType.Distance, ThreePort.One))
@@ -66,7 +70,7 @@ basic.forever(function () {
         while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 7) {
         	
         }
-        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) >= 7) {
+        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) > 7) {
             direction = 1
             GoForward(3)
             direction = -1
@@ -82,7 +86,7 @@ basic.forever(function () {
             hummingbird.setLED(ThreePort.Three, 0)
             hummingbird.setTriLED(
             TwoPort.One,
-            255,
+            0,
             0,
             0
             )
@@ -102,7 +106,7 @@ basic.forever(function () {
             hummingbird.setLED(ThreePort.Three, 0)
             hummingbird.setTriLED(
             TwoPort.One,
-            255,
+            0,
             0,
             0
             )
@@ -126,10 +130,6 @@ basic.forever(function () {
         0
         )
         PoliceLEDOn()
-        while (!(direction == 0)) {
-            music.playTone(523, music.beat(BeatFraction.Whole))
-            music.playTone(622, music.beat(BeatFraction.Whole))
-        }
     } else {
         PoliceLEDOff()
         music.stopAllSounds()
@@ -141,7 +141,4 @@ basic.forever(function () {
         0
         )
     }
-})
-basic.forever(function () {
-    basic.showNumber(hummingbird.getSensor(SensorType.Distance, ThreePort.One))
 })
