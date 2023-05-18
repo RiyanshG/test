@@ -59,25 +59,53 @@ hummingbird.startHummingbird()
 let direction = 0
 hummingbird.setLED(ThreePort.One, 100)
 hummingbird.setLED(ThreePort.Two, 100)
-serial.writeNumber(hummingbird.getBattery())
+serial.writeNumber(hummingbird.getSensor(SensorType.Distance, ThreePort.One))
 // Move the robot if it senses my hand, and stop moving it when it senses my hand again.
 basic.forever(function () {
-    if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 3.5) {
-        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 3.5) {
+    if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 5) {
+        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 5) {
         	
         }
-        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) > 3.5) {
+        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) > 5) {
             direction = 1
             GoForward(3)
             direction = -1
+            hummingbird.setLED(ThreePort.Three, 100)
+            hummingbird.setTriLED(
+            TwoPort.One,
+            255,
+            0,
+            0
+            )
             GoBackward(3)
             direction = -0.5
+            hummingbird.setLED(ThreePort.Three, 0)
+            hummingbird.setTriLED(
+            TwoPort.One,
+            255,
+            0,
+            0
+            )
             TurnLeft(3)
             direction = 1
             GoForward(3)
             direction = -1
+            hummingbird.setLED(ThreePort.Three, 100)
+            hummingbird.setTriLED(
+            TwoPort.One,
+            255,
+            0,
+            0
+            )
             GoBackward(3)
             direction = 0.5
+            hummingbird.setLED(ThreePort.Three, 0)
+            hummingbird.setTriLED(
+            TwoPort.One,
+            255,
+            0,
+            0
+            )
             TurnRight(3)
         }
     } else {
@@ -111,4 +139,7 @@ basic.forever(function () {
         0
         )
     }
+})
+basic.forever(function () {
+    basic.showNumber(hummingbird.getSensor(SensorType.Distance, ThreePort.One))
 })
