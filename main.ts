@@ -62,11 +62,11 @@ hummingbird.setLED(ThreePort.Two, 100)
 serial.writeNumber(hummingbird.getSensor(SensorType.Distance, ThreePort.One))
 // Move the robot if it senses my hand, and stop moving it when it senses my hand again.
 basic.forever(function () {
-    if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 5) {
-        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 5) {
+    if (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 7) {
+        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) < 7) {
         	
         }
-        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) > 5) {
+        while (hummingbird.getSensor(SensorType.Distance, ThreePort.One) >= 7) {
             direction = 1
             GoForward(3)
             direction = -1
@@ -108,6 +108,8 @@ basic.forever(function () {
             )
             TurnRight(3)
         }
+        direction = 0
+        Stop()
     } else {
         direction = 0
         Stop()
